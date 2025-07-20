@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Code, Database, Smartphone, Globe, Server, Cpu } from 'lucide-react'
+import { Code, Database, Smartphone, Globe, Server, Cpu, TrendingUp } from 'lucide-react'
 
 const Skills = () => {
   const skillCategories = [
@@ -71,38 +71,72 @@ const Skills = () => {
     "Version Control", "Agile Development", "Problem Solving", "Team Collaboration"
   ]
 
+  const skillStats = [
+    { label: "Programming Languages", value: "6+", icon: <Code className="text-primary-400" size={24} /> },
+    { label: "Technologies & Tools", value: "12+", icon: <Cpu className="text-primary-400" size={24} /> },
+    { label: "Projects Completed", value: "25+", icon: <TrendingUp className="text-primary-400" size={24} /> }
+  ]
+
   return (
-    <section id="skills" className="section-padding">
+    <section id="skills" className="section-padding relative overflow-hidden">
+      {/* Animated Gradient Background */}
+      <motion.div
+        aria-hidden
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2 }}
+        className="absolute inset-0 -z-10 animate-gradient bg-gradient-to-br from-primary-900 via-secondary-900 to-dark-900 opacity-80 blur-2xl"
+      />
+      {/* Subtle floating shapes */}
+      <motion.div
+        aria-hidden
+        className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-primary-500/30 via-secondary-500/20 to-transparent rounded-full blur-3xl opacity-60 -z-10 animate-float"
+        initial={{ scale: 0.8, opacity: 0.5 }}
+        animate={{ scale: 1, opacity: 0.7, y: [0, 30, 0] }}
+        transition={{ duration: 8, repeat: Infinity, repeatType: 'reverse' }}
+      />
       <div className="container-custom">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1, type: 'spring' }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
+          <h2 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight drop-shadow-xl">
             Technical <span className="gradient-text">Skills</span>
           </h2>
           <p className="text-xl text-dark-300 max-w-3xl mx-auto">
-            A comprehensive overview of my technical expertise and proficiency levels.
+            A comprehensive overview of my technical expertise and proficiency levels across various technologies.
           </p>
         </motion.div>
 
         {/* Skill Categories */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={categoryIndex}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: categoryIndex * 0.1 }}
+              transition={{ duration: 1, delay: categoryIndex * 0.1, type: 'spring' }}
               viewport={{ once: true }}
-              className="glass-effect rounded-lg p-8"
+              whileHover={{ 
+                scale: 1.04, 
+                boxShadow: '0 0 32px 0 #38bdf855',
+                y: -5
+              }}
+              className="premium-card card-hover group"
             >
               <div className="flex items-center gap-4 mb-8">
-                {category.icon}
-                <h3 className="text-2xl font-bold text-white">{category.title}</h3>
+                <motion.div
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  {category.icon}
+                </motion.div>
+                <h3 className="text-2xl font-bold text-white group-hover:text-primary-400 transition-colors duration-300">
+                  {category.title}
+                </h3>
               </div>
 
               <div className="space-y-6">
@@ -110,15 +144,23 @@ const Skills = () => {
                   <div key={skillIndex}>
                     <div className="flex justify-between items-center mb-3">
                       <span className="text-lg font-medium text-white">{skill.name}</span>
-                      <span className="text-base text-dark-300">{skill.level}%</span>
+                      <motion.span 
+                        className="text-base text-dark-300"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ delay: skillIndex * 0.1 }}
+                        viewport={{ once: true }}
+                      >
+                        {skill.level}%
+                      </motion.span>
                     </div>
-                    <div className="w-full bg-dark-700 rounded-full h-3">
+                    <div className="skill-progress">
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${skill.level}%` }}
-                        transition={{ duration: 1, delay: skillIndex * 0.1 }}
+                        transition={{ duration: 1.5, delay: skillIndex * 0.1, ease: "easeOut" }}
                         viewport={{ once: true }}
-                        className={`h-3 rounded-full bg-gradient-to-r ${skill.color}`}
+                        className={`skill-progress-fill bg-gradient-to-r ${skill.color}`}
                       />
                     </div>
                   </div>
@@ -130,14 +172,14 @@ const Skills = () => {
 
         {/* Additional Skills */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1, type: 'spring' }}
           viewport={{ once: true }}
-          className="text-center"
+          className="text-center mb-16"
         >
-          <h3 className="text-3xl font-bold text-white mb-8">Additional Skills & Competencies</h3>
-          <div className="glass-effect rounded-lg p-10 max-w-5xl mx-auto">
+          <h3 className="text-3xl font-bold text-white mb-8 tracking-wide">Additional Skills & Competencies</h3>
+          <div className="premium-card max-w-5xl mx-auto">
             <div className="flex flex-wrap justify-center gap-4">
               {additionalSkills.map((skill, index) => (
                 <motion.span
@@ -146,7 +188,12 @@ const Skills = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: index * 0.05 }}
                   viewport={{ once: true }}
-                  className="px-5 py-3 bg-primary-500/20 text-primary-300 text-lg rounded-full border border-primary-500/30 hover:bg-primary-500/30 transition-colors duration-200"
+                  whileHover={{ 
+                    scale: 1.1, 
+                    backgroundColor: 'rgba(56, 189, 248, 0.3)',
+                    boxShadow: '0 0 20px rgba(56, 189, 248, 0.4)'
+                  }}
+                  className="px-5 py-3 bg-primary-500/20 text-primary-300 text-lg rounded-full border border-primary-500/30 hover:bg-primary-500/30 transition-all duration-300 cursor-default"
                 >
                   {skill}
                 </motion.span>
@@ -157,23 +204,52 @@ const Skills = () => {
 
         {/* Skills Summary */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 1, delay: 0.4, type: 'spring' }}
           viewport={{ once: true }}
-          className="mt-16 grid md:grid-cols-3 gap-8"
+          className="grid md:grid-cols-3 gap-8"
         >
-          <div className="text-center">
-            <div className="text-4xl font-bold gradient-text mb-3">6+</div>
-            <div className="text-xl text-dark-300">Programming Languages</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold gradient-text mb-3">12+</div>
-            <div className="text-xl text-dark-300">Technologies & Tools</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold gradient-text mb-3">25+</div>
-            <div className="text-xl text-dark-300">Projects Completed</div>
+          {skillStats.map((stat, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+              className="text-center premium-card"
+            >
+              <div className="flex items-center justify-center mb-3">
+                {stat.icon}
+              </div>
+              <div className="text-4xl font-bold gradient-text mb-3">{stat.value}</div>
+              <div className="text-xl text-dark-300">{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Learning Journey */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.6, type: 'spring' }}
+          viewport={{ once: true }}
+          className="text-center mt-16"
+        >
+          <div className="premium-card max-w-4xl mx-auto">
+            <h3 className="text-3xl font-bold text-white mb-6 tracking-wide">Continuous Learning Journey</h3>
+            <p className="text-xl text-dark-300 mb-8 leading-relaxed">
+              I believe in staying updated with the latest technologies and best practices. 
+              Currently exploring advanced React patterns, cloud architecture, and emerging technologies.
+            </p>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 rounded-full border border-primary-500/30"
+            >
+              <TrendingUp className="text-primary-400" size={24} />
+              <span className="text-primary-400 font-semibold">Always Learning & Growing</span>
+            </motion.div>
           </div>
         </motion.div>
       </div>

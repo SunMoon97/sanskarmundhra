@@ -63,16 +63,32 @@ const Experience = () => {
   ]
 
   return (
-    <section id="experience" className="section-padding">
+    <section id="experience" className="section-padding relative overflow-hidden">
+      {/* Animated Gradient Background */}
+      <motion.div
+        aria-hidden
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2 }}
+        className="absolute inset-0 -z-10 animate-gradient bg-gradient-to-br from-primary-900 via-secondary-900 to-dark-900 opacity-80 blur-2xl"
+      />
+      {/* Subtle floating shapes */}
+      <motion.div
+        aria-hidden
+        className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-primary-500/30 via-secondary-500/20 to-transparent rounded-full blur-3xl opacity-60 -z-10 animate-float"
+        initial={{ scale: 0.8, opacity: 0.5 }}
+        animate={{ scale: 1, opacity: 0.7, y: [0, 30, 0] }}
+        transition={{ duration: 8, repeat: Infinity, repeatType: 'reverse' }}
+      />
       <div className="container-custom">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1, type: 'spring' }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
+          <h2 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight drop-shadow-xl">
             Work <span className="gradient-text">Experience</span>
           </h2>
           <p className="text-xl text-dark-300 max-w-3xl mx-auto">
@@ -81,15 +97,16 @@ const Experience = () => {
         </motion.div>
 
         {/* Internships */}
-        <div className="space-y-8 mb-16">
+        <div className="space-y-10 mb-16">
           {experiences.map((exp, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              transition={{ duration: 1, delay: index * 0.2, type: 'spring' }}
               viewport={{ once: true }}
-              className="glass-effect rounded-lg p-8 lg:p-10"
+              whileHover={{ scale: 1.03, boxShadow: '0 0 48px 0 #38bdf855' }}
+              className="enhanced-glass rounded-2xl p-10 card-hover shadow-2xl border-2 border-primary-400/20"
             >
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-8">
                 <div className="flex-1">
@@ -163,24 +180,24 @@ const Experience = () => {
 
         {/* Leadership Positions */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1, type: 'spring' }}
           viewport={{ once: true }}
         >
-          <h3 className="text-4xl font-bold text-white mb-10 text-center">
+          <h3 className="text-4xl font-bold text-white mb-10 text-center tracking-wide">
             Leadership <span className="gradient-text">Positions</span>
           </h3>
-          
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-10">
             {positions.map((position, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
+                transition={{ duration: 0.8, delay: index * 0.2, type: 'spring' }}
                 viewport={{ once: true }}
-                className="glass-effect rounded-lg p-8 text-center"
+                whileHover={{ scale: 1.04, boxShadow: '0 0 32px 0 #60a5fa55' }}
+                className="enhanced-glass rounded-2xl p-8 text-center card-hover shadow-xl border border-secondary-400/20"
               >
                 <h4 className="text-xl font-bold text-white mb-3">{position.title}</h4>
                 <p className="text-primary-400 font-medium mb-3 text-lg">{position.organization}</p>

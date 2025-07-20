@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Github, ExternalLink, Code, Users, Database, Smartphone } from 'lucide-react'
+import { Github, ExternalLink, Code, Users, Database, Smartphone, Star, Calendar, TrendingUp } from 'lucide-react'
 
 const Projects = () => {
   const projects = [
@@ -18,7 +18,8 @@ const Projects = () => {
       github: "https://github.com/SunMoon97/MapIt",
       live: "#",
       icon: "🗺️",
-      category: "Full Stack"
+      category: "Full Stack",
+      featured: true
     },
     {
       title: "CSA-Times",
@@ -36,7 +37,8 @@ const Projects = () => {
       live: "#",
       icon: "📱",
       category: "Mobile App",
-      stats: "1.5K+ downloads"
+      stats: "1.5K+ downloads",
+      featured: true
     },
     {
       title: "University Course Assignment System",
@@ -92,23 +94,6 @@ const Projects = () => {
       category: "Automation",
       stats: "Cost reduction achieved"
     },
-    // {
-    //   title: "Calculator App",
-    //   description: "A modern calculator application with advanced mathematical functions and intuitive user interface.",
-    //   features: [
-    //     "Basic arithmetic operations",
-    //     "Scientific functions",
-    //     "History tracking",
-    //     "Responsive design",
-    //     "Keyboard support"
-    //   ],
-    //   technologies: ["HTML", "CSS", "JavaScript", "Responsive Design"],
-    //   deployment: ["GitHub Pages"],
-    //   github: "https://github.com/SunMoon97/calculator",
-    //   live: "#",
-    //   icon: "🧮",
-    //   category: "Web App"
-    // },
     {
       title: "Debugger Architecture for Polarion Script Editor",
       description: "Designed and implemented a modern debugger architecture for the Polarion ALM script editor, enabling advanced debugging for JavaScript and Velocity scripts.",
@@ -125,7 +110,8 @@ const Projects = () => {
       live: "#",
       icon: "🛠️",
       category: "Full Stack",
-      stats: "Enhanced developer productivity"
+      stats: "Enhanced developer productivity",
+      featured: true
     }
   ]
 
@@ -141,16 +127,32 @@ const Projects = () => {
   }
 
   return (
-    <section id="projects" className="section-padding bg-dark-800/50">
+    <section id="projects" className="section-padding relative overflow-hidden">
+      {/* Animated Gradient Background */}
+      <motion.div
+        aria-hidden
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2 }}
+        className="absolute inset-0 -z-10 animate-gradient bg-gradient-to-br from-primary-900 via-secondary-900 to-dark-900 opacity-80 blur-2xl"
+      />
+      {/* Subtle floating shapes */}
+      <motion.div
+        aria-hidden
+        className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-primary-500/30 via-secondary-500/20 to-transparent rounded-full blur-3xl opacity-60 -z-10 animate-float"
+        initial={{ scale: 0.8, opacity: 0.5 }}
+        animate={{ scale: 1, opacity: 0.7, y: [0, 30, 0] }}
+        transition={{ duration: 8, repeat: Infinity, repeatType: 'reverse' }}
+      />
       <div className="container-custom">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1, type: 'spring' }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
+          <h2 className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight drop-shadow-xl">
             Featured <span className="gradient-text">Projects</span>
           </h2>
           <p className="text-xl text-dark-300 max-w-3xl mx-auto">
@@ -158,20 +160,49 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
           {projects.map((project, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
+              transition={{ duration: 1, delay: index * 0.1, type: 'spring' }}
               viewport={{ once: true }}
-              className="glass-effect rounded-lg p-6 card-hover group"
+              whileHover={{ 
+                scale: 1.04, 
+                boxShadow: '0 0 48px 0 #38bdf855',
+                y: -10
+              }}
+              className={`premium-card card-hover group relative overflow-hidden ${
+                project.featured ? 'ring-2 ring-primary-400/50' : ''
+              }`}
             >
+              {/* Featured Badge */}
+              {project.featured && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="absolute top-4 right-4 z-10"
+                >
+                  <div className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-sm font-bold rounded-full">
+                    <Star size={14} />
+                    Featured
+                  </div>
+                </motion.div>
+              )}
+
               {/* Project Header */}
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center gap-3">
-                  <span className="text-4xl">{project.icon}</span>
+                  <motion.span 
+                    className="text-4xl"
+                    whileHover={{ scale: 1.2, rotate: 10 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                  >
+                    {project.icon}
+                  </motion.span>
                   <div>
                     <h3 className="text-2xl font-bold text-white group-hover:text-primary-400 transition-colors duration-200">
                       {project.title}
@@ -191,38 +222,64 @@ const Projects = () => {
 
               {/* Stats */}
               {project.stats && (
-                <div className="mb-6 p-3 bg-primary-500/10 rounded-lg">
-                  <p className="text-primary-400 text-base font-medium">{project.stats}</p>
-                </div>
+                <motion.div 
+                  className="mb-6 p-3 bg-primary-500/10 rounded-lg border border-primary-500/20"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <p className="text-primary-400 text-base font-medium flex items-center gap-2">
+                    <TrendingUp size={16} />
+                    {project.stats}
+                  </p>
+                </motion.div>
               )}
 
               {/* Features */}
               <div className="mb-6">
-                <h4 className="text-lg font-semibold text-white mb-3">Key Features:</h4>
+                <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                  <Code size={20} />
+                  Key Features:
+                </h4>
                 <ul className="space-y-2">
                   {project.features.slice(0, 3).map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start gap-3">
+                    <motion.li 
+                      key={featureIndex} 
+                      className="flex items-start gap-3"
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: featureIndex * 0.1 }}
+                      viewport={{ once: true }}
+                    >
                       <div className="w-2 h-2 bg-primary-400 rounded-full mt-3 flex-shrink-0"></div>
                       <span className="text-base text-dark-300">{feature}</span>
-                    </li>
+                    </motion.li>
                   ))}
                   {project.features.length > 3 && (
-                    <li className="text-base text-primary-400">+{project.features.length - 3} more features</li>
+                    <li className="text-base text-primary-400 flex items-center gap-2">
+                      <span>+{project.features.length - 3} more features</span>
+                    </li>
                   )}
                 </ul>
               </div>
 
               {/* Technologies */}
               <div className="mb-8">
-                <h4 className="text-lg font-semibold text-white mb-3">Technologies:</h4>
+                <h4 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                  <Database size={20} />
+                  Technologies:
+                </h4>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.slice(0, 4).map((tech, techIndex) => (
-                    <span
+                    <motion.span
                       key={techIndex}
-                      className="px-3 py-2 bg-dark-700 text-dark-300 text-base rounded-full border border-dark-600"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: techIndex * 0.05 }}
+                      viewport={{ once: true }}
+                      whileHover={{ scale: 1.1 }}
+                      className="px-3 py-2 bg-dark-700 text-dark-300 text-base rounded-full border border-dark-600 hover:border-primary-500/50 transition-all duration-200"
                     >
                       {tech}
-                    </span>
+                    </motion.span>
                   ))}
                   {project.technologies.length > 4 && (
                     <span className="px-3 py-2 bg-dark-700 text-primary-400 text-base rounded-full border border-dark-600">
@@ -240,9 +297,9 @@ const Projects = () => {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.9 }}
-                      className="text-dark-400 hover:text-primary-400 transition-colors duration-200"
+                      className="text-dark-400 hover:text-primary-400 transition-colors duration-200 p-2 hover:bg-white/5 rounded-lg"
                     >
                       <Github size={22} />
                     </motion.a>
@@ -252,15 +309,16 @@ const Projects = () => {
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.9 }}
-                      className="text-dark-400 hover:text-primary-400 transition-colors duration-200"
+                      className="text-dark-400 hover:text-primary-400 transition-colors duration-200 p-2 hover:bg-white/5 rounded-lg"
                     >
                       <ExternalLink size={22} />
                     </motion.a>
                   )}
                 </div>
-                <div className="text-base text-dark-400">
+                <div className="text-base text-dark-400 flex items-center gap-1">
+                  <Calendar size={16} />
                   {project.deployment.join(", ")}
                 </div>
               </div>
@@ -270,19 +328,23 @@ const Projects = () => {
 
         {/* View More Projects */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 1, delay: 0.5, type: 'spring' }}
           viewport={{ once: true }}
-          className="text-center mt-12"
+          className="text-center mt-16"
         >
           <motion.a
             href="https://github.com/SunMoon97"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-3 px-10 py-4 border-2 border-primary-500 text-primary-400 font-semibold rounded-full hover:bg-primary-500 hover:text-white transition-all duration-300 text-xl"
+            whileHover={{ 
+              scale: 1.08, 
+              boxShadow: '0 0 32px 0 #38bdf8cc',
+              y: -5
+            }}
+            whileTap={{ scale: 0.97 }}
+            className="inline-flex items-center gap-3 px-12 py-5 border-2 border-primary-500 text-primary-400 font-bold rounded-full bg-gradient-to-r from-primary-900/60 to-secondary-900/60 hover:bg-primary-500 hover:text-white transition-all duration-300 text-xl shadow-lg ring-2 ring-primary-400/20 hover:ring-4 hover:ring-primary-400/40 glow-effect"
           >
             <Github size={24} />
             View All Projects on GitHub

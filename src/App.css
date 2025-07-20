@@ -1,42 +1,227 @@
+/* === Futuristic Portfolio Global Styles === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+:root {
+  --primary: #38bdf8;
+  --primary-dark: #0ea5e9;
+  --secondary: #818cf8;
+  --secondary-dark: #6366f1;
+  --accent: #f472b6;
+  --neon: #00fff7;
+  --dark-bg: #0a0f1a;
+  --dark-bg-2: #1e293b;
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(56, 189, 248, 0.2);
+  --white: #fff;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--dark-bg);
+  color: var(--text-main);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* === Animated Background Gradients === */
+body::before, body::after {
+  content: '';
+  position: fixed;
+  z-index: -2;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.5;
+  animation: floatBg 16s ease-in-out infinite alternate;
+}
+body::before {
+  width: 60vw;
+  height: 60vw;
+  left: -20vw;
+  top: -10vw;
+  background: radial-gradient(circle at 30% 30%, var(--primary), transparent 70%);
+  animation-delay: 0s;
+}
+body::after {
+  width: 50vw;
+  height: 50vw;
+  right: -15vw;
+  bottom: -10vw;
+  background: radial-gradient(circle at 70% 70%, var(--accent), transparent 70%);
+  animation-delay: 8s;
+}
+
+@keyframes floatBg {
+  0% { transform: scale(1) translateY(0); }
+  100% { transform: scale(1.1) translateY(40px); }
+}
+
+/* === Floating Neon Shapes for Components === */
+.visual-float {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(80px) brightness(1.2);
+  opacity: 0.7;
+  animation: floatVisual 12s ease-in-out infinite alternate;
+}
+.visual-float.neon-blue {
+  background: radial-gradient(circle, var(--primary) 60%, transparent 100%);
+}
+.visual-float.neon-pink {
+  background: radial-gradient(circle, var(--accent) 60%, transparent 100%);
+}
+.visual-float.neon-green {
+  background: radial-gradient(circle, var(--neon) 60%, transparent 100%);
+}
+.visual-float.neon-purple {
+  background: radial-gradient(circle, var(--secondary) 60%, transparent 100%);
+}
+.visual-float.pulse {
+  animation: pulseNeon 2.5s infinite alternate, floatVisual 12s ease-in-out infinite alternate;
+}
+.visual-float.rotate {
+  animation: rotateNeon 10s linear infinite, floatVisual 12s ease-in-out infinite alternate;
+}
+
+@keyframes floatVisual {
+  0% { transform: scale(1) translateY(0); }
+  100% { transform: scale(1.08) translateY(30px); }
+}
+@keyframes pulseNeon {
+  0% { opacity: 0.6; filter: blur(80px) brightness(1.1); }
+  100% { opacity: 1; filter: blur(100px) brightness(1.4); }
+}
+@keyframes rotateNeon {
+  0% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(360deg) scale(1.08); }
+}
+
+/* === Utility Classes for Floating Shape Placement === */
+.float-top-left { top: 5%; left: 2%; width: 180px; height: 180px; }
+.float-top-right { top: 8%; right: 4%; width: 140px; height: 140px; }
+.float-bottom-left { bottom: 6%; left: 6%; width: 120px; height: 120px; }
+.float-bottom-right { bottom: 10%; right: 8%; width: 200px; height: 200px; }
+.float-center { top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; }
+
+/* === Section and Container Structure === */
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 1rem 2rem 1rem;
   text-align: center;
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.section-padding {
+  padding: 7rem 0 7rem 0;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.container-custom {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* === Typography and Visuals === */
+.gradient-text {
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 16px var(--primary));
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.enhanced-glass {
+  background: var(--glass-bg);
+  border: 2px solid var(--glass-border);
+  box-shadow: 0 8px 48px 0 rgba(56, 189, 248, 0.18), 0 0 32px 0 var(--neon);
+  backdrop-filter: blur(24px) saturate(1.2);
 }
 
-.card {
-  padding: 2em;
+.card-hover {
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.card-hover:hover {
+  box-shadow: 0 8px 48px 0 var(--accent), 0 0 32px 0 var(--neon);
+  transform: translateY(-6px) scale(1.05) rotate(-1deg);
 }
 
-.read-the-docs {
-  color: #888;
+button, .button {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 999px;
+  padding: 1em 2.5em;
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+  color: var(--white);
+  box-shadow: 0 2px 24px 0 var(--neon);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 8px var(--primary);
 }
+button:hover, .button:hover {
+  background: linear-gradient(90deg, var(--primary-dark), var(--accent), var(--secondary-dark));
+  box-shadow: 0 4px 48px 0 var(--accent), 0 0 32px 0 var(--neon);
+  transform: translateY(-2px) scale(1.08) rotate(1deg);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: var(--dark-bg-2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 8px;
+}
+
+h1, .h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+h2, .h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  line-height: 1.15;
+}
+h3, .h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+p, .p {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+}
+
+img, video {
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 32px 0 var(--primary-dark);
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 2rem;
+}
+/* === Placeholder/Helper for Floating SVGs or Visuals === */
+/*
+Example usage in React:
+<div className="visual-float neon-blue float-top-left pulse" />
+<div className="visual-float neon-pink float-bottom-right rotate" />
+*/
+
+::-webkit-input-placeholder { color: var(--text-muted); }
+::-moz-placeholder { color: var(--text-muted); }
+:-ms-input-placeholder { color: var(--text-muted); }
+::placeholder { color: var(--text-muted); }
+
