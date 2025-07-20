@@ -56,7 +56,7 @@ const Hero = () => {
   }
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section id="home" className="hero-section">
       
       {/* Live Floating Tech Icons Background */}
       <FloatingTechIcons icons={techIcons} />
